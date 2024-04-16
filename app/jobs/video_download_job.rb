@@ -1,0 +1,3 @@
+class VideoDownloadJob < ApplicationJob
+
+end
