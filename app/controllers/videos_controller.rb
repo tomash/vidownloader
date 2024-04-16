@@ -25,6 +25,7 @@ class VideosController < ApplicationController
 
     respond_to do |format|
       if @video.save
+        VideoDownloadJob.perform_later(@video)
         format.html { redirect_to video_url(@video), notice: "Video was successfully created." }
         format.json { render :show, status: :created, location: @video }
       else
@@ -65,6 +66,7 @@ class VideosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def video_params
-      params.fetch(:video, {})
+      # params.fetch(:video, {})
+      params.require(:video).permit(:url)
     end
 end
